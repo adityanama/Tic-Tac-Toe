@@ -1,89 +1,118 @@
-*,*::before,*::after{
+*,
+*::before,
+*::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     font-family: 'Poppins', 'sans-serif';
 }
 
-.wrapper{
+.wrapper {
     overflow: hidden;
     width: 100vw;
     height: 100vh;
-    background-image: url(./gradient.jpg);
+    background-image: url(./background.jpg);
     background-size: cover;
     background-position: center;
     display: grid;
     place-items: center;
 }
 
-.game-info{
-    color:white;
-    position:absolute;
-    top:3rem;
-    left:50%;
-    transform:translateX(-50%);
-    background-color: rgba(255, 255, 255, 0.15);
-    border-radius: 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    padding: 0.5rem 3rem;
+.game-info {
+    color: white;
+    position: absolute;
+    top: 4.5rem;
+    left: 15rem;
+    font-size: 35px;
+    letter-spacing: 3px;
+    font-weight: bolder;
+    text-shadow: 4px 4px 15px rgb(228, 223, 223, 1);
 }
 
-.tic-tac-toe{
-    width: 90%;
-    max-width: 20rem;
+.tic-tac-toe {
+    width: 25rem;
     background-color: rgba(255, 255, 255, 0.15);
     border-radius: 1rem;
-    border: 1px solid rgba(255,255,255,0.25);
+    border: 3px solid rgba(255, 255, 255, 0.25);
     padding: 2rem;
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(3, 1fr);
     aspect-ratio: 1/1;
-    /* margin: 200px; */
 }
 
-.box{
+.box {
     position: relative;
     cursor: pointer;
     width: 100%;
     aspect-ratio: 1/1;
-    font-size: 3rem;
-    color: white;
+    font-size: 4.2rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-weight:500;
 }
 
-.box1, .box2, .box4, .box5{
-    border-right: 2px solid white;
-    border-bottom: 2px solid white;
+.box1,
+.box2,
+.box4,
+.box5 {
+    border-right: 4px solid white;
+    border-bottom: 4px solid white;
 }
 
-.box3, .box6{
-    border-bottom: 2px solid white;
+.box3,
+.box6 {
+    border-bottom: 4px solid white;
 }
 
-.box7, .box8{
-    border-right: 2px solid white;
+.box7,
+.box8 {
+    border-right: 4px solid white;
 }
 
-.btn{
-    color:white;
+.btn {
+    all: unset;
+    color: rgb(255, 255, 255);
     position: absolute;
-    bottom:3rem;
-    left:50%;
-    transform:translateX(-50%);
+    bottom: 70px;
+    right: 300px;
+    font-size: 25px;
+    letter-spacing: 2px;
+    font-weight: bolder;
     background-color: rgba(255, 255, 255, 0.15);
     border-radius: 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border: 4px solid rgba(255, 255, 255, 0.25);
     padding: 0.5rem 2rem;
-    cursor:pointer;
+    cursor: pointer;
     display: none;
 }
 
-.btn.active{
+.active {
     display: flex;
 }
 
-.win{
-    background-color: rgba(0,255,0,0.3);
+.win {
+    background-color: rgba(4, 110, 4, 0.7);
+}
+
+.yellow-color{
+    color: rgb(244, 255, 34);
+}
+
+.gray-color{
+    color:darkorange;
+}
+
+.crackers{
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    top: 250px;
+    left: 250px;
+    min-width: 1100px;
+}
+
+.show{
+    display: flex;
 }

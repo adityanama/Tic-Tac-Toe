@@ -1,6 +1,7 @@
 const boxes = document.querySelectorAll(".box");
 const gameInfo = document.querySelector(".game-info");
 const newGameBtn = document.querySelector(".btn");
+const cracker = document.querySelector(".crackers");
 
 let currPlayer;
 let gameGrid;
@@ -21,6 +22,8 @@ function initGame() {
     currPlayer = "X";
     gameGrid = ["", "", "", "", "", "", "", "", ""];
     newGameBtn.classList.remove("active");
+    cracker.classList.remove("show");
+    
     boxes.forEach((box, index) => {
         box.innerText = "";
         boxes[index].style.pointerEvents = "all";
@@ -40,6 +43,11 @@ boxes.forEach((box, index) => {
 
 function handleClick(index) {
     if (gameGrid[index] === "") {
+        if(currPlayer == "O")
+            boxes[index].classList.add("yellow-color");
+        else
+            boxes[index].classList.add("gray-color");
+
         boxes[index].innerText = currPlayer;
         gameGrid[index] = currPlayer;
         boxes[index].style.pointerEvents = "none";
@@ -76,6 +84,7 @@ function checkGameOver() {
             });
 
             newGameBtn.classList.add("active");
+            cracker.classList.add("show");
             gameInfo.innerText = `WINNER - ${gameGrid[i]}`;
         }
     });
