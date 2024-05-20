@@ -6,6 +6,7 @@ const cracker = document.querySelector(".crackers");
 let currPlayer;
 let gameGrid;
 initGame();
+console.log(boxes);
 
 const winningPositions = [
     [0, 1, 2],
@@ -23,7 +24,7 @@ function initGame() {
     gameGrid = ["", "", "", "", "", "", "", "", ""];
     newGameBtn.classList.remove("active");
     cracker.classList.remove("show");
-    
+
     boxes.forEach((box, index) => {
         box.innerText = "";
         boxes[index].style.pointerEvents = "all";
@@ -67,29 +68,29 @@ function swapTurn() {
 }
 
 function checkGameOver() {
-    let ans = "";
+    let flag = true;
     winningPositions.forEach((arr) => {
         let i = arr[0];
         let j = arr[1];
         let k = arr[2];
-
+        
         if ((gameGrid[i] == "X" && gameGrid[j] == "X" && gameGrid[k] == "X") ||
-            (gameGrid[i] == "O" && gameGrid[j] == "O" && gameGrid[k] == "O")) {
+        (gameGrid[i] == "O" && gameGrid[j] == "O" && gameGrid[k] == "O")) 
+        {
             boxes[i].classList.add("win");
             boxes[j].classList.add("win");
             boxes[k].classList.add("win");
-
+            
             boxes.forEach((box) => {
                 box.style.pointerEvents = "none";
             });
-
+            
             newGameBtn.classList.add("active");
             cracker.classList.add("show");
             gameInfo.innerText = `WINNER - ${gameGrid[i]}`;
+            flag = false;
         }
     });
-
-    let flag = true;
     gameGrid.forEach((val) => {
         if (val == "")
             flag = false;
@@ -104,4 +105,3 @@ function checkGameOver() {
 }
 
 newGameBtn.addEventListener("click", initGame);
-
