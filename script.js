@@ -88,7 +88,7 @@ function checkGameOver() {
             newGameBtn.classList.add("active");
             cracker.classList.add("show");
             gameInfo.innerText = `WINNER - ${gameGrid[i]}`;
-            flag = false;
+            return;
         }
     });
     gameGrid.forEach((val) => {
