@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
 *,
 *::before,
 *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Poppins', 'sans-serif';
+    font-family: "Rubik", sans-serif;
 }
 
 .wrapper {
@@ -26,7 +28,7 @@
     font-size: 35px;
     letter-spacing: 3px;
     font-weight: bolder;
-    text-shadow: 4px 4px 15px rgb(228, 223, 223, 1);
+    text-shadow: 4px 4px 18px rgb(228, 223, 223, 1);
 }
 
 .tic-tac-toe {
