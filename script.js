@@ -1,109 +1,169 @@
-const boxes = document.querySelectorAll(".box");
-const gameInfo = document.querySelector(".game-info");
-const newGameBtn = document.querySelector(".btn");
 const cracker = document.querySelector(".crackers");
+const gameInfo = document.querySelector(".game-info");
+const playBtn = document.querySelector(".play");
+const game = document.querySelector(".game");
+const settings = document.querySelector(".settings");
+const settingBtn = document.querySelector(".settingBtn");
+const newGameBtn = document.querySelector(".btn");
+const cells = document.querySelectorAll('.box');
 
-let currPlayer;
-let gameGrid;
-initGame();
-console.log(boxes);
+var origBoard;
+const huPlayer = 'O';
+const aiPlayer = 'X';
 
-const winningPositions = [
+const winCombos = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
     [0, 3, 6],
     [1, 4, 7],
     [2, 5, 8],
-    [2, 4, 6],
-    [0, 4, 8]
-];
+    [0, 4, 8],
+    [6, 4, 2]
+]
 
-function initGame() {
-    currPlayer = "X";
-    gameGrid = ["", "", "", "", "", "", "", "", ""];
-    newGameBtn.classList.remove("active");
-    cracker.classList.remove("show");
-
-    boxes.forEach((box, index) => {
-        box.innerText = "";
-        boxes[index].style.pointerEvents = "all";
-        box.classList = `box box${index+1}`;
-    });
-
-    gameInfo.innerText = `Current Player - ${currPlayer}`;
-
-}
-
-
-boxes.forEach((box, index) => {
-    box.addEventListener("click", () => {
-        handleClick(index);
-    })
+playBtn.addEventListener('click', startGame)
+settingBtn.addEventListener('click', () => {
+    game.style.display = 'none'
+    settings.style.display = 'block'
 })
 
-function handleClick(index) {
-    if (gameGrid[index] === "") {
-        if(currPlayer == "O")
-            boxes[index].classList.add("yellow-color");
-        else
-            boxes[index].classList.add("gray-color");
+newGameBtn.addEventListener('click', startGame);
 
-        boxes[index].innerText = currPlayer;
-        gameGrid[index] = currPlayer;
-        boxes[index].style.pointerEvents = "none";
+function startGame() {
+    cracker.classList.remove("show")
+    settings.classList.remove("active")
+    game.style.display = 'block'
+    settings.style.display = 'none'
+    gameInfo.textContent = '';
 
-        swapTurn();
-        checkGameOver();
+    origBoard = Array.from(Array(9).keys());
+    for (var i = 0; i < cells.length; i++) {
+        cells[i].innerText = '';
+        cells[i].classList.remove("win");
+        cells[i].addEventListener('click', turnClick, false);
     }
 }
 
-function swapTurn() {
-    if (currPlayer == "X")
-        currPlayer = "O";
+function turnClick(square) {
+    if (typeof origBoard[square.target.id] == 'number') {
+        turn(square.target.id, huPlayer)
+        if (!checkWin(origBoard, huPlayer) && !checkTie())
+            turn(bestSpot(), aiPlayer);
+    }
+}
+
+function turn(squareId, player) {
+    origBoard[squareId] = player;
+    document.getElementById(squareId).innerText = player;
+
+    if (player == huPlayer)
+        document.getElementById(squareId).classList.add("yellow-color");
     else
-        currPlayer = "X";
+        document.getElementById(squareId).classList.add("gray-color");
 
-    gameInfo.innerText = `Current Player - ${currPlayer}`;
+    let gameWon = checkWin(origBoard, player)
+    if (gameWon)
+        gameOver(gameWon)
 }
 
-function checkGameOver() {
-    let flag = true;
-    winningPositions.forEach((arr) => {
-        let i = arr[0];
-        let j = arr[1];
-        let k = arr[2];
-        
-        if ((gameGrid[i] == "X" && gameGrid[j] == "X" && gameGrid[k] == "X") ||
-        (gameGrid[i] == "O" && gameGrid[j] == "O" && gameGrid[k] == "O")) 
-        {
-            boxes[i].classList.add("win");
-            boxes[j].classList.add("win");
-            boxes[k].classList.add("win");
-            
-            boxes.forEach((box) => {
-                box.style.pointerEvents = "none";
-            });
-            
-            newGameBtn.classList.add("active");
-            cracker.classList.add("show");
-            gameInfo.innerText = `WINNER - ${gameGrid[i]}`;
-            flag = false;
-            return;
+function checkWin(board, player) {
+    let plays = board.reduce((a, e, i) =>
+        (e === player) ? a.concat(i) : a, []);
+
+    let gameWon = null;
+    for (let [index, win] of winCombos.entries()) {
+        if (win.every(elem => plays.indexOf(elem) > -1)) {
+            gameWon = { index: index, player: player };
+            break;
         }
-    });
+    }
+    return gameWon;
+}
 
-    gameGrid.forEach((val) => {
-        if (val == "")
-            flag = false;
-    });
-
-    if (flag == true)
-    {
-        gameInfo.innerText = `GAME DRAWN`;
-        newGameBtn.classList.add("active");
+function gameOver(gameWon) {
+    for (let index of winCombos[gameWon.index]) {
+        document.getElementById(index).classList.add("win");
+    }
+    for (var i = 0; i < cells.length; i++) {
+        cells[i].removeEventListener('click', turnClick, false);
     }
 
+    if(gameWon.player == huPlayer)
+        cracker.classList.add("show");
+    declareWinner(gameWon.player == huPlayer ? "You WIN" : "You LOSE");
 }
 
-newGameBtn.addEventListener("click", initGame);
+function declareWinner(who) {
+    gameInfo.innerText = who
+}
+
+function emptySquares() {
+    return origBoard.filter(s => typeof s == 'number');
+}
+
+function bestSpot() {
+    return minimax(origBoard, aiPlayer).index;
+}
+
+function checkTie() {
+    if (emptySquares().length == 0) {
+        for (var i = 0; i < cells.length; i++) {
+            cells[i].removeEventListener('click', turnClick, false);
+        }
+        declareWinner("Game Drawn")
+        return true;
+    }
+    return false;
+}
+
+function minimax(newBoard, player) {
+    var availSpots = emptySquares();
+
+    if (checkWin(newBoard, huPlayer)) {
+        return { score: -10 };
+    } else if (checkWin(newBoard, aiPlayer)) {
+        return { score: 10 };
+    } else if (availSpots.length === 0) {
+        return { score: 0 };
+    }
+    var moves = [];
+    for (var i = 0; i < availSpots.length; i++) {
+        var move = {};
+        move.index = newBoard[availSpots[i]];
+        newBoard[availSpots[i]] = player;
+
+        if (player == aiPlayer) {
+            var result = minimax(newBoard, huPlayer);
+            move.score = result.score;
+        } else {
+            var result = minimax(newBoard, aiPlayer);
+            move.score = result.score;
+        }
+
+        newBoard[availSpots[i]] = move.index;
+
+        moves.push(move);
+    }
+
+    var bestMove;
+    if (player === aiPlayer) {
+        var bestScore = -10000;
+        for (var i = 0; i < moves.length; i++) {
+            if (moves[i].score > bestScore) {
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
+        }
+    } else {
+        var bestScore = 10000;
+        for (var i = 0; i < moves.length; i++) {
+            if (moves[i].score < bestScore) {
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
+        }
+    }
+
+    return moves[bestMove];
+}

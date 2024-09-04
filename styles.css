@@ -20,16 +20,6 @@
     place-items: center;
 }
 
-.game-info {
-    color: white;
-    position: absolute;
-    top: 4.5rem;
-    left: 15rem;
-    font-size: 35px;
-    letter-spacing: 3px;
-    font-weight: bolder;
-    text-shadow: 4px 4px 18px rgb(228, 223, 223, 1);
-}
 
 .tic-tac-toe {
     width: 25rem;
@@ -72,7 +62,19 @@
     border-right: 4px solid white;
 }
 
-.btn {
+.game-info {
+    color: white;
+    position: absolute;
+    top: 4.5rem;
+    left: 15rem;
+    font-size: 35px;
+    letter-spacing: 3px;
+    font-weight: bolder;
+    text-shadow: 4px 4px 18px rgb(228, 223, 223, 1);
+}
+
+
+.play {
     all: unset;
     color: rgb(255, 255, 255);
     position: absolute;
@@ -86,11 +88,14 @@
     border: 4px solid rgba(255, 255, 255, 0.25);
     padding: 0.5rem 2rem;
     cursor: pointer;
-    display: none;
 }
 
 .active {
-    display: flex;
+    display: block;
+}
+
+.game{
+    display: none;
 }
 
 .win {
@@ -103,6 +108,27 @@
 
 .gray-color{
     color:darkorange;
+}
+
+.buttons{
+    display: flex;
+    gap:30px;
+    position: absolute;
+    bottom: 70px;
+    right: 150px;
+}
+
+.btn{
+    all: unset;
+    color: rgb(255, 255, 255);
+    font-size: 25px;
+    letter-spacing: 2px;
+    font-weight: bolder;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 1rem;
+    border: 4px solid rgba(255, 255, 255, 0.25);
+    padding: 0.5rem 2rem;
+    cursor: pointer;
 }
 
 .crackers{

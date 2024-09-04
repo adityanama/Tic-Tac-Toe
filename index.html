@@ -11,27 +11,53 @@
 
 <body>
     <div class="wrapper">
-        <p class="game-info"></p>
 
-        <div class="tic-tac-toe">
-            <div class="box box1"></div>
-            <div class="box box2"></div>
-            <div class="box box3"></div>
-            <div class="box box4"></div>
-            <div class="box box5"></div>
-            <div class="box box6"></div>
-            <div class="box box7"></div>
-            <div class="box box8"></div>
-            <div class="box box9"></div>
+        <div class="settings">
+            <div class="">
+                <p>Choose your Character</p>
+                <button>X</button>
+                <button>O</button>
+            </div>
+            <div class="">
+                <p>Select Difficulty</p>
+                <button>Easy</button>
+                <button>Hard</button>
+            </div>
+
+            <button class="play">Play</button>
         </div>
 
-        <button class="btn">New Game</button>
-    </div>
+        <div class="game">
 
-    <div class="crackers">
-        <img class="fire" src="./diwali-sparkles-stars.gif" alt="" height="200px" width="200px" loading="lazy">
-
-        <img class="joy" src="./joy-bunny.gif" alt="" height="250px" width="250px" loading="lazy">
+            <p class="game-info"></p>
+    
+            <div class="tic-tac-toe">
+                <div class="box box1" id = "0"></div>
+                <div class="box box2" id = "1"></div>
+                <div class="box box3" id = "2"></div>
+                <div class="box box4" id = "3"></div>
+                <div class="box box5" id = "4"></div>
+                <div class="box box6" id = "5"></div>
+                <div class="box box7" id = "6"></div>
+                <div class="box box8" id = "7"></div>
+                <div class="box box9" id = "8"></div>
+            </div>
+    
+            <div class="buttons">
+                <button class="btn">
+                    New Game
+                </button>
+                <button class="btn settingBtn">
+                    Settings
+                </button>
+            </div>
+        </div>
+    
+        <div class="crackers">
+            <img class="fire" src="./diwali-sparkles-stars.gif" alt="" height="200px" width="200px" loading="lazy">
+    
+            <img class="joy" src="./joy-bunny.gif" alt="" height="250px" width="250px" loading="lazy">
+        </div>
     </div>
 
     <script src="script.js"></script>
